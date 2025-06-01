@@ -4,15 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class SearchController extends Controller
+class GraphController extends Controller
 {
-    public function index()
+    public function show()
     {
-        return view('frontpage');
-    }
-    public function showTrackHistory()
-    {
-        // Example data (replace with your actual logic)
+        // Example data; replace with your actual data logic
         $trackhistory = [
             [
                 'queue_type' => 'Group A',
@@ -25,6 +21,6 @@ class SearchController extends Controller
         ];
 
         // Pass the variable to the view
-        return view('your_blade_filename', compact('trackhistory'));
+        return view('graph', compact('trackhistory'));
     }
 }

@@ -16,16 +16,16 @@
     <div class="Profile-wrapper">
         @include('partials.profile')
         <div class="feature-buttons">
-            <a class="feature-button" data-target="trackhistory">Match-History</a>
-            <a class="feature-button" data-target="something1">Nikolai Feature</a>
-            <a class="feature-button" data-target="something2">Jakob Feature</a>
-            <a class="feature-button" data-target="something3">Peter Feature</a>
+            <a class="feature-button" data-target="trackhistory">Track history</a>
+            <a class="feature-button" data-target="something1">something 1</a>
+            <a class="feature-button" data-target="something2">something 2</a>
+            <a class="feature-button" data-target="something3">something 3</a>
             <a class="feature-button" data-target="graph"> Graph </a>
         </div>
     </div>
     <!-- <div class="content-wrapper">
         <div class="left-column">
-            @include('partials.ranked')
+            @include('partials.info')
     @include('partials.artistinfo')
     </div> -->
 
