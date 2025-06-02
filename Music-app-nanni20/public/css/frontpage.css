@@ -1,72 +1,48 @@
-body{
+
+body {
     font-family: Arial, sans-serif;
-    background-image: url("../img/Freljord.webp");
-    margin: 0;
-    padding: 0;
-    background-size: cover;
-    background-attachment: fixed;
+    margin: 40px;
+    background: #FFD1DC; /* Candyfloss pink */
 }
-
-.info-wrapper{
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
-.content-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: center;
-    gap: 50px;
-    margin-top: 50px;
-}
-
-.left-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.right-column {
-    display: flex;
-    width: 975px;
-    flex-direction: column;
-    align-items: center;
-}
-
-
-.match-background {
-    width: 975px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    border-radius: 10px;
-}
-/* Feature button container */
-.feature-buttons {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.feature-button {
+.btn {
     display: inline-block;
-    padding: 30px 38px;
-    background-color: #1C1A2E;
-    color: white;
-    margin-top: 20px;
+    padding: 16px 30px;
+    margin: 10px;
+    font-size: 20px;
     text-decoration: none;
-    border-radius: 10px;
-    font-size: 16px;
-}
-
-.feature-button:hover {
-    background-color: #1ea1f2;
-    transition: background-color 0.3s ease;
+    color: #fff;
+    background-color: #0078D7;
+    border-radius: 6px;
+    border: none;
     cursor: pointer;
 }
-
-.profile-wrapper{
-    justify-content: center;
-    display: flex;
+.btn:hover {
+    background-color: #005fa3;
 }
-
+.features {
+    margin-top: 40px;
+}
+.top-tracks-section {
+    margin-top: 50px;
+    background: #f8f8f8;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+}
+.top-tracks-section h2 {
+    margin-top: 0;
+}
+.top-tracks-list {
+    list-style: decimal;
+    padding-left: 30px;
+}
+.top-tracks-list li {
+    margin-bottom: 16px;
+}
+.top-tracks-list img {
+    vertical-align: middle;
+    margin-right: 8px;
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+}

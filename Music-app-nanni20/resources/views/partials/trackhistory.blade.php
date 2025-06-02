@@ -11,20 +11,25 @@
 <body>
 <h1>Top Tracks for {{ $user }}</h1>
 
-@if(count($topTracks))
-    <ol>
-        @foreach($topTracks as $track)
-            <li>
-                @if(!empty($track['image'][2]['#text']))
-                    <img src="{{ $track['image'][2]['#text'] }}" alt="cover" width="64" height="64">
-                @endif
-                <strong>{{ $track['name'] }}</strong> by {{ $track['artist']['name'] ?? '-' }}<br>
-                <small>Playcount: {{ $track['playcount'] ?? 'N/A' }}</small>
-            </li>
-        @endforeach
-    </ol>
-@else
-    <p>No top tracks found for this user or API error.</p>
+@if(isset($topTracks) && count($topTracks))
+    <div class="top-tracks-section">
+        <h2>Top Tracks the last week</h2>
+        <ol class="top-tracks-list">
+            @foreach($topTracks as $track)
+                <li>
+                    @if(!empty($track['image'][2]['#text']))
+                        <img src="{{ $track['image'][2]['#text'] }}" alt="cover" width="48" height="48">
+                    @else
+                        <img src="https://via.placeholder.com/48?text=No+Image" alt="no cover" width="48" height="48">
+                    @endif
+                    <strong>{{ $track['name'] }}</strong>
+                    by {{ $track['artist']['name'] ?? '-' }}
+                    <br>
+                    <small>Playcount: {{ $track['playcount'] ?? 'N/A' }}</small>
+                </li>
+            @endforeach
+        </ol>
+    </div>
 @endif
 
 </body>

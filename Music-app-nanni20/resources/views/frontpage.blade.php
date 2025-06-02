@@ -17,10 +17,10 @@
         @include('partials.profile')
         <div class="feature-buttons">
             <a class="feature-button" data-target="trackhistory">Track history</a>
-            <a class="feature-button" data-target="something1">something 1</a>
-            <a class="feature-button" data-target="something2">something 2</a>
-            <a class="feature-button" data-target="something3">something 3</a>
-            <a class="feature-button" data-target="graph"> Graph </a>
+            <a class="feature-button" data-target="something1"> </a>
+            <a class="feature-button" data-target="something2"> </a>
+            <a class="feature-button" data-target="something3"> </a>
+            <a class="feature-button" data-target="graph"> </a>
         </div>
     </div>
     <!-- <div class="content-wrapper">

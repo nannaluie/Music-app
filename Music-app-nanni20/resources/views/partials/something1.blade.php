@@ -1,41 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ $user }}'s Recent Listens</title>
+    <title>Recent Tracks for {{ $user }}</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        img { vertical-align: middle; margin-right: 8px; }
-        li { margin-bottom: 18px; }
+        body { font-family: Arial, Helvetica, sans-serif; margin: 40px; }
+        .track-list { max-width: 700px; margin: 30px auto; }
+        .track-list li { margin-bottom: 14px; }
+        .track-list img { vertical-align: middle; margin-right: 10px; width: 44px; height: 44px; border-radius: 4px; }
+        h1 { text-align: center; }
     </style>
 </head>
 <body>
-<h1>Recent Listens for {{ $user }}</h1>
-
-@if(count($recentTracks ?? []))
-    <ul>
-        @foreach($recentTracks as $track)
+<h1>Recent Tracks for {{ $user }}</h1>
+@if(count($tracks ?? []))
+    <ul class="track-list">
+        @foreach($tracks as $track)
             <li>
-                @if(!empty($track['image'][2]['#text']))
-                    <img src="{{ $track['image'][2]['#text'] }}" alt="cover" width="64" height="64">
+                @if(!empty($track['image'][1]['#text']))
+                    <img src="{{ $track['image'][1]['#text'] }}" alt="cover">
                 @endif
                 <strong>{{ $track['name'] }}</strong>
                 by {{ $track['artist']['#text'] ?? '-' }}
-                <br>
-                <small>
-                    Album: {{ $track['album']['#text'] ?? '-' }}<br>
-                    Played at:
-                    @if(isset($track['date']['uts']))
-                        {{ date('Y-m-d H:i:s', $track['date']['uts']) }}
-                    @else
-                        <em>Now Playing</em>
-                    @endif
-                </small>
+                @if(isset($track['date']['uts']))
+                    <small>({{ date('Y-m-d H:i', $track['date']['uts']) }})</small>
+                @else
+                    <small>(Now Playing)</small>
+                @endif
             </li>
         @endforeach
     </ul>
 @else
-    <p>No recent listens found for this user or API error.</p>
+    <p>No recent tracks found.</p>
 @endif
-
 </body>
 </html>
