@@ -14,7 +14,7 @@
     <canvas id="topTracksChart"></canvas>
 </div>
 
-@if(count($graphData))
+@if(count($graphData ?? []))
     <script>
         const ctx = document.getElementById('topTracksChart').getContext('2d');
         const chart = new Chart(ctx, {
