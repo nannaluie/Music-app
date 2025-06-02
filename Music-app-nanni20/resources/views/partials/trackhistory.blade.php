@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ $user }}'s Top Tracks</title>
+    <title>Top Tracks for {{ $user }}</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
         img { vertical-align: middle; margin-right: 8px; }

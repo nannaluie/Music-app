@@ -1,66 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Top_track_Graph</title>
+    <title>Top Tracks Graph for {{ $user }}</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body{ font-family: Arial, Helvetica, sans-serif; margin: 40px; }
-        canvas{ max-width: 900px; height: 400px; width: 100% !important; height: auto !important; }
-        pre { background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd; }
-        #chart-container{ background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); max-width: 900px; margin: auto; }
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        #chart-container { width: 100%; max-width: 900px; margin: 0 auto; }
     </style>
 </head>
 <body>
-@php
-    $trackhistory = $trackhistory ?? [];
-@endphp
-
-<h2>Win_rate Progression - Grouped based on group_types </h2>
+<h1>Recent Listening History for {{ $user }}</h1>
 <div id="chart-container">
-    <canvas id="trackhistory"></canvas>
+    <canvas id="topTracksChart"></canvas>
 </div>
 
-<h3> debug groupedHistory</h3>
-<pre>{{ print_r($trackhistory, true) }}</pre>
-
-<script>
-    let trackhistory = {!! json_encode($trackhistory) !!};
-    const labels = Array.from({ length: 10 }, (_, i) => `Match ${i + 1}`);
-
-    const datasets = trackhistory.map(group => ({
-        label: group.queue_type,
-        data: group.win_rates,
-        fill: true,
-        borderWidth: 2,
-        tension: 0.2
-    }));
-
-    const graphContext = document.getElementById('trackhistory').getContext('2d');
-    new Chart(graphContext, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: datasets
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'bottom' },
-                tooltip: { enabled: true }
+@if(count($graphData))
+    <script>
+        const ctx = document.getElementById('topTracksChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @json($allDates),
+                datasets: [
+                        @foreach($graphData as $dataset)
+                    {
+                        label: {!! json_encode($dataset['label']) !!},
+                        data: {!! json_encode($dataset['data']) !!},
+                        borderColor: '#' + Math.floor(Math.random()*16777215).toString(16),
+                        backgroundColor: 'rgba(0,0,0,0.0)',
+                        fill: false,
+                        tension: 0.2
+                    },
+                    @endforeach
+                ]
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    title: { display: true, text: 'play rate (%)' }
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Scrobbles per Track per Day (Recent Plays)'
+                    }
                 },
-                x: {
-                    title: { display: true, text: 'Track order (Oldest -> Newest)' }
+                interaction: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Plays'
+                        }
+                    }
                 }
             }
-        }
-    });
-    console.log("trackhistory", trackhistory);
-</script>
+        });
+    </script>
+@else
+    <p>No recent listening data found.</p>
+@endif
 </body>
 </html>
