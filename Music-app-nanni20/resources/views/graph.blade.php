@@ -62,7 +62,18 @@
             responsive: false,
             plugins: { legend: { position: 'bottom' }, title: { display: false } },
             scales: {
-                y: { beginAtZero: true, title: { display: true, text: 'Listen count' } },
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Listen count' },
+                    ticks: {
+                        callback: function(value) {
+                            if (Number.isInteger(value)) {
+                                return value;
+                            }
+                        },
+                        stepSize: 1
+                    }
+                },
                 x: { title: { display: true, text: 'Day' } }
             }
         }
