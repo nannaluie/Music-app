@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Music App</title>
+    <title>Last.fm music app nanni20</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
+        .app-header {
+            background: linear-gradient(90deg, #e75480 0%, #ffb6c1 100%);
+            color: #fff;
+            padding: 32px 0 18px 0;
+            text-align: center;
+            font-size: 2.3em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 18px #e7548055;
+            margin-bottom: 24px;
+        }
         .graph-btn {
             display: inline-block;
             margin: 24px auto 0;
@@ -71,6 +82,9 @@
     </style>
 </head>
 <body>
+<div class="app-header">
+    Last.fm music app nanni20
+</div>
 <div class="btn-container">
     <a href="{{ route('graph.timeline', ['user' => 'nannaluie']) }}" class="graph-btn">
         🎵 View Listening Graph
@@ -78,7 +92,7 @@
 </div>
 
 <div class="top-tracks">
-    <h2>Top Tracks</h2>
+    <h2>Top Tracks for nannaluie</h2>
     @if(isset($topTracks) && count($topTracks))
         <ul class="track-list">
             @foreach($topTracks as $track)
