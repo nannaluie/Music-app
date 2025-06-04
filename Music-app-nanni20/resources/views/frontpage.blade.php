@@ -1,57 +1,108 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title> Music app Nanna </title>
-    <script src="../js/search"></script>
-    <script src="{{ asset('js/toggleFeatureButtons.js') }}"></script>
-    <link rel="stylesheet" href="{{asset('/css/frontpage.css')}}">
+    <title>Music App</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <style>
+        .graph-btn {
+            display: inline-block;
+            margin: 24px auto 0;
+            padding: 12px 26px;
+            font-size: 1.15em;
+            color: #fff;
+            background-color: #e75480;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px #f0acb880;
+            transition: background 0.2s;
+        }
+        .graph-btn:hover {
+            background-color: #d14670;
+        }
+        .btn-container {
+            width: 100%;
+            text-align: center;
+        }
+        .top-tracks {
+            margin: 40px auto 0;
+            max-width: 600px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px #f0acb8aa;
+            padding: 28px;
+        }
+        .top-tracks h2 {
+            text-align: center;
+        }
+        .track-list {
+            list-style: none;
+            padding: 0;
+        }
+        .track-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+            border-bottom: 1px solid #F8BBD0;
+            padding-bottom: 10px;
+        }
+        .track-list img {
+            width: 56px;
+            height: 56px;
+            border-radius: 6px;
+            margin-right: 16px;
+            background: #eee;
+        }
+        .track-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .track-title {
+            font-weight: bold;
+            color: #C2185B;
+        }
+        .track-artist {
+            color: #555;
+        }
+        .track-playcount {
+            color: #888;
+            font-size: 0.95em;
+        }
+    </style>
 </head>
-
 <body>
-<header>
-    @include('partials.header')
-</header>
-
-<div class="info-wrapper">
-    <div class="Profile-wrapper">
-        @include('partials.profile')
-        <div class="feature-buttons">
-            <a class="feature-button" data-target="trackhistory">Track history</a>
-            <a class="feature-button" data-target="something1"> </a>
-            <a class="feature-button" data-target="something2"> </a>
-            <a class="feature-button" data-target="something3"> </a>
-            <a class="feature-button" data-target="graph"> </a>
-        </div>
-    </div>
-    <!-- <div class="content-wrapper">
-        <div class="left-column">
-            @include('partials.info')
-    @include('partials.artistinfo')
-    </div> -->
-
-    <div class="right-column">
-        <div id="trackhistory" class="feature-section">
-            @include('partials.trackhistory')
-        </div>
-        <div id="something1" class="feature-section">
-            @include('partials.something1')
-        </div>
-        <div id="something2" class="feature-section">
-            @include('partials.something2')
-        </div>
-        <div id="graph" class="feature-section">
-            @include('graph')
-        </div>
-        <div id="something3" class="feature-section">
-            @include('partials.something3')
-        </div>
-    </div>
+<div class="btn-container">
+    <a href="{{ route('graph.timeline', ['user' => 'nannaluie']) }}" class="graph-btn">
+        🎵 View Listening Graph
+    </a>
 </div>
+
+<div class="top-tracks">
+    <h2>Top Tracks</h2>
+    @if(isset($topTracks) && count($topTracks))
+        <ul class="track-list">
+            @foreach($topTracks as $track)
+                <li>
+                    @if(!empty($track['image'][2]['#text']))
+                        <img src="{{ $track['image'][2]['#text'] }}" alt="cover">
+                    @else
+                        <img src="https://via.placeholder.com/56?text=No+Image" alt="no cover">
+                    @endif
+                    <div class="track-details">
+                        <span class="track-title">
+                            <a href="{{ $track['url'] ?? '#' }}" target="_blank" style="color:inherit;text-decoration:underline;">
+                                {{ $track['name'] ?? '-' }}
+                            </a>
+                        </span>
+                        <span class="track-artist">by {{ $track['artist']['name'] ?? '-' }}</span>
+                        <span class="track-playcount">Plays: {{ $track['playcount'] ?? 'N/A' }}</span>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+    @else
+        <p style="text-align:center;">No top tracks found.</p>
+    @endif
 </div>
 </body>
 </html>
-
-
-
-
-

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class GraphController extends Controller
 {
-    public function dailyTracksTimeline($user = 'rj')
+    public function dailyTracksTimeline($user = 'nannaluie')
     {
         $apiKey = env('LASTFM_API_KEY');
         // Get recent tracks (limit 200 for demo; can page for more)
