@@ -15,9 +15,15 @@
             box-shadow: 0 4px 18px #e7548055;
             margin-bottom: 24px;
         }
-        .graph-btn {
+        .btn-container {
+            width: 100%;
+            text-align: center;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+        .graph-btn, .artists-btn, .albums-btn {
             display: inline-block;
-            margin: 24px auto 0;
+            margin: 0 10px;
             padding: 12px 26px;
             font-size: 1.15em;
             color: #fff;
@@ -28,12 +34,8 @@
             box-shadow: 0 2px 8px #f0acb880;
             transition: background 0.2s;
         }
-        .graph-btn:hover {
+        .graph-btn:hover, .artists-btn:hover, .albums-btn:hover {
             background-color: #d14670;
-        }
-        .btn-container {
-            width: 100%;
-            text-align: center;
         }
         .top-tracks {
             margin: 40px auto 0;
@@ -89,10 +91,16 @@
     <a href="{{ route('graph.timeline', ['user' => 'nannaluie']) }}" class="graph-btn">
         🎵 View Listening Graph
     </a>
+    <a href="{{ route('user.topartists') }}" class="artists-btn">
+        ⭐ View Top Artists
+    </a>
+    <a href="{{ route('user.topalbums') }}" class="albums-btn">
+        💽 View Top Albums
+    </a>
 </div>
 
 <div class="top-tracks">
-    <h2>Top Tracks for nannaluie</h2>
+    <h2>Top Tracks</h2>
     @if(isset($topTracks) && count($topTracks))
         <ul class="track-list">
             @foreach($topTracks as $track)
