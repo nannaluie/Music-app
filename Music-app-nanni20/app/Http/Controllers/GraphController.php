@@ -6,60 +6,69 @@ use Illuminate\Http\Request;
 
 class GraphController extends Controller
 {
-    public function showTopTracksGraph()
+    public function dailyTracksTimeline($user = 'rj')
     {
-        $user = 'nannaluie'; // <-- replace with your Last.fm username
         $apiKey = env('LASTFM_API_KEY');
-        $limit = 200; // Max allowed by Last.fm per request
-
+        // Get recent tracks (limit 200 for demo; can page for more)
         $url = "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks"
             . "&user=" . urlencode($user)
             . "&api_key=" . urlencode($apiKey)
             . "&format=json"
-            . "&limit={$limit}";
+            . "&limit=200";
 
         $response = @file_get_contents($url);
         $data = $response ? json_decode($response, true) : [];
+        $recentTracks = $data['recenttracks']['track'] ?? [];
 
-        $trackPlays = [];
-        $allDates = [];
-
-        if (!empty($data['recenttracks']['track'])) {
-            foreach ($data['recenttracks']['track'] as $track) {
-                if (isset($track['date']['uts'])) {
-                    $date = date('Y-m-d', $track['date']['uts']);
-                    $song = $track['name'] . ' - ' . ($track['artist']['#text'] ?? '');
-
-                    // Group plays per date per song
-                    if (!isset($trackPlays[$song])) $trackPlays[$song] = [];
-                    if (!isset($trackPlays[$song][$date])) $trackPlays[$song][$date] = 0;
-                    $trackPlays[$song][$date]++;
-                    $allDates[$date] = true;
-                }
+        // Group by day and by track
+        $trackDayCounts = [];
+        $allDays = [];
+        foreach ($recentTracks as $track) {
+            if (!isset($track['date']['uts'])) {
+                // Now playing, skip
+                continue;
             }
+            $date = date('Y-m-d', $track['date']['uts']);
+            $trackName = $track['name'];
+            $trackDayCounts[$trackName][$date] = ($trackDayCounts[$trackName][$date] ?? 0) + 1;
+            $allDays[$date] = true;
         }
 
-        // Sort all dates
-        $allDates = array_keys($allDates);
-        sort($allDates);
+        // Sort days
+        $days = array_keys($allDays);
+        sort($days);
 
-        // Prepare data for graph: for each song, fill missing dates with 0
-        $graphData = [];
-        foreach ($trackPlays as $song => $dateCounts) {
-            $counts = [];
-            foreach ($allDates as $date) {
-                $counts[] = $dateCounts[$date] ?? 0;
+        // Get top 5 tracks by total plays in period
+        $topTracks = array_slice(
+            array_keys(
+                array_map(
+                    function($arr) { return array_sum($arr); },
+                    $trackDayCounts
+                ),
+                SORT_DESC,
+                true
+            ),
+            0,
+            5
+        );
+
+        // Prepare data for chart.js
+        $timelineData = [];
+        foreach ($topTracks as $trackName) {
+            $dataPoints = [];
+            foreach ($days as $day) {
+                $dataPoints[] = $trackDayCounts[$trackName][$day] ?? 0;
             }
-            $graphData[] = [
-                'label' => $song,
-                'data' => $counts,
+            $timelineData[] = [
+                'name' => $trackName,
+                'data' => $dataPoints,
             ];
         }
 
-        return view('frontpage', [
-            'user' => $user,
-            'allDates' => $allDates,
-            'graphData' => $graphData,
+        return view('graph', [
+            'timelineData' => $timelineData,
+            'days' => $days,
+            'user' => $user
         ]);
     }
 }

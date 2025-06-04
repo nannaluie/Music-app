@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title> Music app Nanna </title>
-    <script src="../js/search" ></script>
+    <script src="../js/search"></script>
     <script src="{{ asset('js/toggleFeatureButtons.js') }}"></script>
     <link rel="stylesheet" href="{{asset('/css/frontpage.css')}}">
 </head>
@@ -40,7 +40,7 @@
             @include('partials.something2')
         </div>
         <div id="graph" class="feature-section">
-            @include('partials.graph')
+            @include('graph')
         </div>
         <div id="something3" class="feature-section">
             @include('partials.something3')
