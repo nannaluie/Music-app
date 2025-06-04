@@ -8,7 +8,7 @@ class FrontpageController extends Controller
 {
     public function showTopTracks()
     {
-        $user = 'nannaluie'; // <-- Change this to your Last.fm username
+        $user = 'nannaluie';
         $apiKey = env('LASTFM_API_KEY');
         $url = "https://ws.audioscrobbler.com/2.0/?method=user.gettoptracks"
             . "&user=" . urlencode($user)

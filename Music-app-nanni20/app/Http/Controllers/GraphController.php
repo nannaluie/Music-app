@@ -9,7 +9,7 @@ class GraphController extends Controller
     public function dailyTracksTimeline($user = 'nannaluie')
     {
         $apiKey = env('LASTFM_API_KEY');
-        // Get recent tracks (limit 200 for demo; can page for more)
+        // Get recent tracks
         $url = "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks"
             . "&user=" . urlencode($user)
             . "&api_key=" . urlencode($apiKey)
@@ -52,7 +52,7 @@ class GraphController extends Controller
             5
         );
 
-        // Prepare data for chart.js
+
         $timelineData = [];
         foreach ($topTracks as $trackName) {
             $dataPoints = [];

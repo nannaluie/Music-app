@@ -8,7 +8,7 @@ class UserController extends Controller
     public function topArtists()
     {
         $apiKey = env('LASTFM_API_KEY');
-        $user = 'nannaluie'; // You can make this dynamic if needed
+        $user = 'nannaluie';
 
         $url = "https://ws.audioscrobbler.com/2.0/?method=user.gettopartists"
             . "&user=" . urlencode($user)
