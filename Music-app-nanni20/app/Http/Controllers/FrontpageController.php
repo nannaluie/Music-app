@@ -3,22 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\LastfmService;
 
 class FrontpageController extends Controller
 {
-    public function showTopTracks()
+    protected $lastfmService;
+
+    public function __construct(LastfmService $lastfmService)
+    {
+        $this->lastfmService = $lastfmService;
+    }
+
+    public function showTopTracks(Request $request)
     {
         $user = 'nannaluie';
-        $apiKey = env('LASTFM_API_KEY');
-        $url = "https://ws.audioscrobbler.com/2.0/?method=user.gettoptracks"
-            . "&user=" . urlencode($user)
-            . "&api_key=" . urlencode($apiKey)
-            . "&format=json&limit=10";
-
-        $response = @file_get_contents($url);
-        $data = $response ? json_decode($response, true) : [];
+        $data = $this->lastfmService->getTopTracks($user, 10);
         $topTracks = $data['toptracks']['track'] ?? [];
-
         return view('frontpage', compact('topTracks', 'user'));
     }
 }

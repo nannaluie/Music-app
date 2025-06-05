@@ -89,7 +89,7 @@
 </div>
 <div class="btn-container">
     <a href="{{ route('graph.timeline', ['user' => 'nannaluie']) }}" class="graph-btn">
-        🎵 View Listening Graph
+        🎵 View Graph
     </a>
     <a href="{{ route('user.topartists') }}" class="artists-btn">
         ⭐ View Top Artists
